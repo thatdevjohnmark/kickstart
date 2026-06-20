@@ -36,7 +36,7 @@ export async function createResume(formData: FormData) {
     file_url: formData.get("file_url") ?? undefined,
   });
 
-  if (!validated.success) return { error: validated.error.errors[0].message };
+  if (!validated.success) return { error: validated.error.issues[0]?.message ?? "Validation failed" };
 
   const { error } = await supabase.from("resumes").insert({
     ...validated.data,
@@ -59,7 +59,7 @@ export async function updateResume(id: string, formData: FormData) {
     file_url: formData.get("file_url") ?? undefined,
   });
 
-  if (!validated.success) return { error: validated.error.errors[0].message };
+  if (!validated.success) return { error: validated.error.issues[0]?.message ?? "Validation failed" };
 
   const { error } = await supabase
     .from("resumes")

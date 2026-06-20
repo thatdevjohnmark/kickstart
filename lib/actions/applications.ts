@@ -102,7 +102,7 @@ export async function createApplication(formData: FormData) {
 
   const validated = applicationSchema.safeParse(raw);
   if (!validated.success) {
-    return { error: validated.error.errors[0].message };
+    return { error: validated.error.issues[0]?.message ?? "Validation failed" };
   }
 
   const { error } = await supabase.from("applications").insert({
@@ -134,7 +134,7 @@ export async function updateApplication(id: string, formData: FormData) {
 
   const validated = applicationSchema.safeParse(raw);
   if (!validated.success) {
-    return { error: validated.error.errors[0].message };
+    return { error: validated.error.issues[0]?.message ?? "Validation failed" };
   }
 
   const { error } = await supabase
