@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #09090b;
+  --color-surface: #18181b;
+  --color-primary: #6c82ff;
+
+  --color-saved: #94a3b8;
+  --color-applied: #60a5fa;
+  --color-assessment: #fbbf24;
+  --color-interviewing: #fb923c;
+  --color-offer: #34d399;
+  --color-rejected: #f87171;
+  --color-ghosted: #71717a;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-white;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Press Start 2P', cursive;
+  }
+}
+
+@layer components {
+  .retro-card {
+    @apply border-4 border-black rounded-lg shadow-[4px_4px_0px_#000] transition-transform hover:-translate-x-1 hover:-translate-y-1;
+  }
+}
