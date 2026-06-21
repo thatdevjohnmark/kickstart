@@ -24,8 +24,8 @@ export function useBoard(
   }
 
   function resolveTargetStage(
-    active: { id: string },
-    over: { id: string }
+    active: { id: unknown },
+    over: { id: unknown }
   ): Stage | null {
     const overId = over.id as string;
 
