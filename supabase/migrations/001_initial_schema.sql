@@ -17,6 +17,7 @@ create table if not exists applications (
     notes text,
     resume_id uuid,
     date_applied date,
+    reminder_date date,
     created_at timestamptz default now(),
     updated_at timestamptz default now()
 );

@@ -43,9 +43,10 @@ interface ColumnProps {
   onEdit: (app: Application) => void;
   onDelete: (app: Application) => void;
   onAdd: (formData: FormData) => Promise<{ error?: string; success?: boolean }>;
+  resumeMap: Record<string, string>;
 }
 
-export function Column({ stage, applications, onEdit, onDelete, onAdd }: ColumnProps) {
+export function Column({ stage, applications, onEdit, onDelete, onAdd, resumeMap }: ColumnProps) {
   const { setNodeRef, isOver } = useDroppable({ id: stage });
 
   return (
@@ -85,6 +86,7 @@ export function Column({ stage, applications, onEdit, onDelete, onAdd }: ColumnP
               application={app}
               onEdit={onEdit}
               onDelete={onDelete}
+              resumeMap={resumeMap}
             />
           ))}
         </SortableContext>

@@ -24,6 +24,8 @@ const applicationSchema = z.object({
   job_url: z.string().url().optional().or(z.literal("")),
   notes: z.string().optional(),
   date_applied: z.string().optional(),
+  resume_id: z.string().uuid().optional().nullable(),
+  reminder_date: z.string().optional(),
 });
 
 // ─── Queries ─────────────────────────────────────────────────────────────────
@@ -98,6 +100,8 @@ export async function createApplication(formData: FormData) {
     job_url: formData.get("job_url") ?? undefined,
     notes: formData.get("notes") ?? undefined,
     date_applied: formData.get("date_applied") ?? undefined,
+    resume_id: formData.get("resume_id") || undefined,
+    reminder_date: formData.get("reminder_date") || undefined,
   };
 
   const validated = applicationSchema.safeParse(raw);
@@ -109,12 +113,15 @@ export async function createApplication(formData: FormData) {
     ...validated.data,
     user_id: user.id,
     job_url: validated.data.job_url || null,
+    resume_id: validated.data.resume_id ?? null,
+    reminder_date: validated.data.reminder_date || null,
   });
 
   if (error) return { error: error.message };
 
   revalidatePath("/dashboard");
   revalidatePath("/applications");
+  revalidatePath("/calendar");
   return { success: true };
 }
 
@@ -130,6 +137,8 @@ export async function updateApplication(id: string, formData: FormData) {
     job_url: formData.get("job_url") ?? undefined,
     notes: formData.get("notes") ?? undefined,
     date_applied: formData.get("date_applied") ?? undefined,
+    resume_id: formData.get("resume_id") || undefined,
+    reminder_date: formData.get("reminder_date") || undefined,
   };
 
   const validated = applicationSchema.safeParse(raw);
@@ -139,13 +148,19 @@ export async function updateApplication(id: string, formData: FormData) {
 
   const { error } = await supabase
     .from("applications")
-    .update({ ...validated.data, job_url: validated.data.job_url || null })
+    .update({
+      ...validated.data,
+      job_url: validated.data.job_url || null,
+      resume_id: validated.data.resume_id ?? null,
+      reminder_date: validated.data.reminder_date || null,
+    })
     .eq("id", id);
 
   if (error) return { error: error.message };
 
   revalidatePath("/dashboard");
   revalidatePath("/applications");
+  revalidatePath("/calendar");
   return { success: true };
 }
 
@@ -161,6 +176,7 @@ export async function updateApplicationStage(id: string, stage: Stage) {
 
   revalidatePath("/dashboard");
   revalidatePath("/applications");
+  revalidatePath("/calendar");
   return { success: true };
 }
 
@@ -176,5 +192,6 @@ export async function deleteApplication(id: string) {
 
   revalidatePath("/dashboard");
   revalidatePath("/applications");
+  revalidatePath("/calendar");
   return { success: true };
 }

@@ -32,6 +32,8 @@ create table applications (
 
     date_applied date,
 
+    reminder_date date,
+
     created_at timestamptz default now(),
     updated_at timestamptz default now()
 );

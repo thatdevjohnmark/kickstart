@@ -2,6 +2,7 @@ import { getDashboardStats, getApplications } from "@/lib/actions/applications";
 import { StatsBar } from "@/components/dashboard/stats-bar";
 import { PipelineProgress } from "@/components/dashboard/pipeline-progress";
 import { RecentApplications } from "@/components/dashboard/recent-applications";
+import { UpcomingReminders } from "@/components/dashboard/upcoming-reminders";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function DashboardPage() {
@@ -45,6 +46,11 @@ export default async function DashboardPage() {
           <RecentApplications applications={applications} />
         </div>
       </div>
+
+      {/* Upcoming Reminders */}
+      <section className="mt-6">
+        <UpcomingReminders applications={applications} />
+      </section>
     </div>
   );
 }

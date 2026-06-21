@@ -1,8 +1,12 @@
 import { getApplications } from "@/lib/actions/applications";
+import { getResumes } from "@/lib/actions/resumes";
 import { Board } from "@/components/board/board";
 
 export default async function ApplicationsPage() {
-  const applications = await getApplications();
+  const [applications, resumes] = await Promise.all([
+    getApplications(),
+    getResumes(),
+  ]);
 
   return (
     <div className="flex flex-col h-screen">
@@ -18,7 +22,7 @@ export default async function ApplicationsPage() {
         </p>
       </div>
       <div className="flex-1 overflow-hidden">
-        <Board initialApplications={applications} />
+        <Board initialApplications={applications} resumes={resumes} />
       </div>
     </div>
   );

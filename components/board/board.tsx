@@ -9,8 +9,9 @@ import {
   closestCorners,
 } from "@dnd-kit/core";
 import { useState } from "react";
-import { Plus } from "lucide-react";
+import { Plus, Filter } from "lucide-react";
 import { STAGES, type Application, type Stage } from "@/types/application";
+import type { Resume } from "@/types/resume";
 import { useApplications } from "@/hooks/use-applications";
 import { useBoard } from "@/hooks/use-board";
 import { useSearch } from "@/hooks/use-search";
@@ -22,9 +23,10 @@ import { cn } from "@/lib/utils";
 
 interface BoardProps {
   initialApplications: Application[];
+  resumes?: Resume[];
 }
 
-export function Board({ initialApplications }: BoardProps) {
+export function Board({ initialApplications, resumes = [] }: BoardProps) {
   const {
     applications,
     moveApplication,
@@ -34,10 +36,15 @@ export function Board({ initialApplications }: BoardProps) {
     error,
   } = useApplications(initialApplications);
 
-  const { query, setQuery, filtered } = useSearch(applications);
+  const { query, setQuery, stageFilter, setStageFilter, filtered } = useSearch(applications);
 
   const { activeApp, byStage, handleDragStart, handleDragOver, handleDragEnd } =
     useBoard(filtered, moveApplication);
+
+  // Build a lookup map: resume_id → resume name
+  const resumeMap = Object.fromEntries(
+    resumes.map((r) => [r.id, r.name])
+  );
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } })
@@ -84,6 +91,26 @@ export function Board({ initialApplications }: BoardProps) {
           placeholder="Search applications…"
           className="flex-1 max-w-xs bg-background border-2 border-black rounded-md px-3 py-2 text-sm text-white placeholder:text-white/30 outline-none focus:border-primary transition-colors"
         />
+        {/* Stage filter */}
+        <select
+          value={stageFilter}
+          onChange={(e) => setStageFilter(e.target.value as Stage | "all")}
+          className="bg-background border-2 border-black rounded-md px-3 py-2 text-sm text-white outline-none focus:border-primary transition-colors cursor-pointer appearance-none pr-8"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.4)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`,
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "right 8px center",
+          }}
+        >
+          <option value="all">All Stages</option>
+          <option value="saved">Saved</option>
+          <option value="applied">Applied</option>
+          <option value="assessment">Assessment</option>
+          <option value="interviewing">Interviewing</option>
+          <option value="offer">Offer</option>
+          <option value="rejected">Rejected</option>
+          <option value="ghosted">Ghosted</option>
+        </select>
         <div className="ml-auto flex items-center gap-2">
           {error && (
             <p className="text-rejected text-xs">{error}</p>
@@ -121,6 +148,7 @@ export function Board({ initialApplications }: BoardProps) {
                 onEdit={openEdit}
                 onDelete={(app) => setDeletingApp(app)}
                 onAdd={addApplication}
+                resumeMap={resumeMap}
               />
             ))}
 
@@ -131,6 +159,7 @@ export function Board({ initialApplications }: BoardProps) {
                   onEdit={() => {}}
                   onDelete={() => {}}
                   isDragOverlay
+                  resumeMap={resumeMap}
                 />
               ) : null}
             </DragOverlay>
@@ -142,6 +171,7 @@ export function Board({ initialApplications }: BoardProps) {
       {modalOpen && (
         <ApplicationModal
           application={editingApp}
+          resumes={resumes}
           onSubmit={handleModalSubmit}
           onClose={closeModal}
         />

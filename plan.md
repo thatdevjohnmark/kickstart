@@ -26,12 +26,13 @@ Core principles:
 
 ## Frontend
 
-* Next.js 15 (App Router)
+* Next.js 16 (App Router)
 * TypeScript
-* Tailwind CSS
+* Tailwind CSS v4
 * shadcn/ui
 * Lucide React
 * dnd-kit
+* @aejkatappaja/phantom-ui (skeleton loading)
 
 ## Backend
 
@@ -256,6 +257,8 @@ create table applications (
   salary text,
 
   date_applied date,
+
+  reminder_date date,
 
   created_at timestamptz default now(),
   updated_at timestamptz default now()
@@ -498,7 +501,9 @@ tailwind.config = {
 * [x] Delete Application
 * [x] Drag and Drop Stages
 * [x] Search Applications
-* [ ] Filter Applications
+* [x] Optimistic UI Updates (add/edit/move/drag)
+* [x] Link Resumes to Applications
+* [x] Filter Applications
 
 ## Analytics
 
@@ -523,6 +528,7 @@ Track:
 * [x] Applications per Resume
 * [x] Interview Rate
 * [x] Offer Rate
+* [x] Link Resume to Application (via modal dropdown)
 
 ---
 
@@ -530,10 +536,10 @@ Track:
 
 ## Version 2
 
-* [ ] Analytics Dashboard
-* [ ] Resume Tracking
-* [ ] Calendar View
-* [ ] Follow-up Reminders
+* [x] Analytics Dashboard
+* [x] Resume Tracking
+* [x] Calendar View
+* [x] Follow-up Reminders
 
 
 ## Version 3
@@ -570,6 +576,8 @@ npm install recharts
 npm install zod
 
 npm install react-hook-form
+
+npm install @aejkatappaja/phantom-ui
 ```
 
 ---
@@ -591,6 +599,35 @@ npm install react-hook-form
 * [x] 13. Resume Tracking
 * [ ] 14. Mobile Optimization
 * [ ] 15. Deploy to Vercel
+
+---
+
+# Post-MVP Features (Implemented)
+
+## Skeleton Loading
+
+```tsx
+<phantom-ui loading animation="pulse" reveal={0.3}>
+  <div className="card">
+    <img src={user?.avatar} />
+    <h3>{user?.name ?? "x"}</h3>
+    <p>{user?.bio ?? "x"}</p>
+  </div>
+</phantom-ui>
+```
+
+Pages with skeletons:
+
+* [x] Dashboard (`loading.tsx`)
+* [x] Applications Board (`loading.tsx`)
+* [x] Analytics (`loading.tsx`)
+
+Powered by `@aejkatappaja/phantom-ui` — structure-aware shimmer skeleton loader that measures real DOM to generate perfectly-aligned shimmer blocks. Supports `pulse`, `shimmer`, `breathe`, and `solid` animation modes.
+
+## Hydration Fixes
+
+* [x] `suppressHydrationWarning` on `<html>` and `<body>` for browser extension compatibility
+* [x] dnd-kit `aria-describedby` ID mismatch fix
 
 ---
 

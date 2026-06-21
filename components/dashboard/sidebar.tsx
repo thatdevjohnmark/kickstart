@@ -6,6 +6,7 @@ import {
   LayoutDashboard,
   KanbanSquare,
   BarChart2,
+  Calendar,
   Settings,
   LogOut,
   Zap,
@@ -16,6 +17,7 @@ import { logout } from "@/lib/actions/auth";
 const NAV_ITEMS = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/applications", label: "Applications", icon: KanbanSquare },
+  { href: "/calendar", label: "Calendar", icon: Calendar },
   { href: "/analytics", label: "Analytics", icon: BarChart2 },
   { href: "/settings", label: "Settings", icon: Settings },
 ];

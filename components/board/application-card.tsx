@@ -2,7 +2,7 @@
 
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { MapPin, DollarSign, Calendar, ExternalLink, Pencil, Trash2 } from "lucide-react";
+import { MapPin, DollarSign, Calendar, ExternalLink, Pencil, Trash2, FileText } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Application } from "@/types/application";
 import { format } from "date-fns";
@@ -12,6 +12,7 @@ interface ApplicationCardProps {
   onEdit: (app: Application) => void;
   onDelete: (app: Application) => void;
   isDragOverlay?: boolean;
+  resumeMap?: Record<string, string>;
 }
 
 export function ApplicationCard({
@@ -19,6 +20,7 @@ export function ApplicationCard({
   onEdit,
   onDelete,
   isDragOverlay = false,
+  resumeMap = {},
 }: ApplicationCardProps) {
   const {
     attributes,
@@ -74,6 +76,12 @@ export function ApplicationCard({
           <div className="flex items-center gap-1.5 text-white/40 text-xs">
             <Calendar className="w-3 h-3 shrink-0" />
             <span>{format(new Date(application.date_applied), "MMM d, yyyy")}</span>
+          </div>
+        )}
+        {application.resume_id && resumeMap?.[application.resume_id] && (
+          <div className="flex items-center gap-1.5 text-primary/60 text-xs">
+            <FileText className="w-3 h-3 shrink-0" />
+            <span className="truncate">{resumeMap[application.resume_id]}</span>
           </div>
         )}
       </div>

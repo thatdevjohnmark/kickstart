@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { X } from "lucide-react";
+import { X, FileText } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { STAGES, type Application, type Stage } from "@/types/application";
+import type { Resume } from "@/types/resume";
 
 const STAGE_LABELS: Record<Stage, string> = {
   saved: "Saved",
@@ -18,6 +19,7 @@ const STAGE_LABELS: Record<Stage, string> = {
 interface ApplicationModalProps {
   application?: Application | null;
   defaultStage?: Stage;
+  resumes?: Resume[];
   onSubmit: (formData: FormData) => Promise<{ error?: string; success?: boolean }>;
   onClose: () => void;
 }
@@ -25,6 +27,7 @@ interface ApplicationModalProps {
 export function ApplicationModal({
   application,
   defaultStage = "saved",
+  resumes = [],
   onSubmit,
   onClose,
 }: ApplicationModalProps) {
@@ -121,6 +124,31 @@ export function ApplicationModal({
                 defaultValue={application?.date_applied ?? ""}
                 className={cn(inputCls, "cursor-pointer")}
               />
+            </Field>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <Field label="Reminder">
+              <input
+                name="reminder_date"
+                type="date"
+                defaultValue={application?.reminder_date ?? ""}
+                className={cn(inputCls, "cursor-pointer")}
+              />
+            </Field>
+            <Field label="Resume">
+              <select
+                name="resume_id"
+                defaultValue={application?.resume_id ?? ""}
+                className={cn(inputCls, "cursor-pointer")}
+              >
+                <option value="">None</option>
+                {resumes.map((r) => (
+                  <option key={r.id} value={r.id}>
+                    {r.name}
+                  </option>
+                ))}
+              </select>
             </Field>
           </div>
 

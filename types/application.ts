@@ -22,6 +22,7 @@ export interface Application {
   notes: string | null;
   resume_id: string | null;
   date_applied: string | null;
+  reminder_date: string | null;
   created_at: string;
   updated_at: string;
 }
