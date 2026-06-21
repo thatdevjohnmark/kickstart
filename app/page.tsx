@@ -102,8 +102,64 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="py-8 px-6 border-t-4 border-black bg-[#18181b] text-center text-sm text-gray-400">
-        © {new Date().getFullYear()} KICKSTART. Built for the modern job seeker.
+      {/* Meet the Team Section */}
+      <section className="py-20 px-6 bg-[#09090b] border-t-4 border-black">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl font-pixel font-bold text-white mb-4">
+            MEET THE TEAM
+          </h2>
+          <p className="text-gray-400 text-sm mb-12 max-w-xl mx-auto">
+            Built by a solo developer, powered by AI agents.
+          </p>
+
+          <div className="flex flex-col items-center gap-6 mb-12">
+            {/* Creator card */}
+            <div className="p-6 border-4 border-black bg-white text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] w-full max-w-sm">
+              <div className="w-16 h-16 mx-auto mb-3 rounded-full border-4 border-black bg-[#6c82ff] flex items-center justify-center text-white text-2xl font-pixel">
+                JM
+              </div>
+              <h3 className="text-lg font-bold font-pixel uppercase mb-1">
+                thatdevjohnmark
+              </h3>
+              <p className="text-gray-600 text-sm">
+                Solo developer &amp; job seeker. Built Kickstart to solve his own job hunt chaos.
+              </p>
+            </div>
+          </div>
+
+          {/* AI Agents */}
+          <div>
+            <p className="text-gray-500 text-xs mb-4 font-pixel uppercase tracking-wider">
+              Powered By
+            </p>
+            <div className="flex flex-wrap justify-center gap-3">
+              {["DeepSeek", "Gemma", "Claude", "ChatGPT"].map((agent) => (
+                <span
+                  key={agent}
+                  className="px-4 py-2 border-2 border-black bg-[#18181b] text-white text-xs font-medium shadow-[2px_2px_0px_#000]"
+                >
+                  {agent}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-8 px-6 border-t-4 border-black bg-[#18181b] text-center space-y-4">
+        <span
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-md border-2 border-black bg-[#FF813F] text-white text-sm font-bold shadow-[3px_3px_0px_#000] opacity-80 cursor-not-allowed"
+          title="Buy me a coffee (coming soon)"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M2 21V19H20V21H2ZM20 8V5H22V11H20V10H18V13C18 13.5304 17.7893 14.0391 17.4142 14.4142C17.0391 14.7893 16.5304 15 16 15H10C9.46957 15 8.96086 14.7893 8.58579 14.4142C8.21071 14.0391 8 13.5304 8 13V3H18V8H20ZM16 8V5H10V8H16Z"/>
+          </svg>
+          Buy Me a Coffee
+        </span>
+        <p className="text-gray-400 text-sm">
+          © {new Date().getFullYear()} KICKSTART. Built for the modern job seeker.
+        </p>
       </footer>
     </div>
   );

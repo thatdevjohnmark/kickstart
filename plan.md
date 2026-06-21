@@ -540,6 +540,8 @@ Track:
 * [x] Resume Tracking
 * [x] Calendar View
 * [x] Follow-up Reminders
+* [x] Add collapsable side bar that turns on icons
+
 
 
 ## Version 3
@@ -642,3 +644,26 @@ Build a polished SaaS-grade application tracker that combines:
 * [x] Supabase cloud sync
 * [ ] Mobile-first experience
 * [x] Professional developer-grade architecture
+
+---
+
+# Credits
+
+## Creator
+
+```txt
+thatdevjohnmark
+```
+
+Solo developer & job seeker. Built Kickstart to solve his own job hunt chaos.
+
+## AI Agents Used
+
+* DeepSeek
+* Gemma
+* Claude
+* ChatGPT
+
+## Buy Me a Coffee
+
+Non-functional placeholder button on the landing page footer. To be wired up later.
