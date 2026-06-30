@@ -4,6 +4,7 @@ import {
   DndContext,
   DragOverlay,
   PointerSensor,
+  TouchSensor,
   useSensor,
   useSensors,
   closestCorners,
@@ -47,7 +48,8 @@ export function Board({ initialApplications, resumes = [] }: BoardProps) {
   );
 
   const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 5 } })
+    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
+    useSensor(TouchSensor, { activationConstraint: { delay: 250, tolerance: 5 } })
   );
 
   // Modal state
@@ -84,12 +86,12 @@ export function Board({ initialApplications, resumes = [] }: BoardProps) {
   return (
     <div className="flex flex-col h-full">
       {/* Toolbar */}
-      <div className="flex items-center gap-3 px-6 py-4 border-b-4 border-black bg-surface shrink-0">
+      <div className="flex flex-wrap items-center gap-2 px-4 lg:px-6 py-3 lg:py-4 border-b-4 border-black bg-surface shrink-0">
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search applications…"
-          className="flex-1 max-w-xs bg-background border-2 border-black rounded-md px-3 py-2 text-sm text-white placeholder:text-white/30 outline-none focus:border-primary transition-colors"
+          className="flex-1 min-w-[140px] max-w-xs bg-background border-2 border-black rounded-md px-3 py-2 text-sm text-white placeholder:text-white/30 outline-none focus:border-primary transition-colors"
         />
         {/* Stage filter */}
         <select
@@ -132,7 +134,7 @@ export function Board({ initialApplications, resumes = [] }: BoardProps) {
 
       {/* Board */}
       <div className="flex-1 overflow-x-auto overflow-y-hidden">
-        <div className="flex gap-5 p-6 h-full min-w-max">
+        <div className="flex gap-5 p-4 lg:p-6 h-full min-w-max">
           <DndContext
             sensors={sensors}
             collisionDetection={closestCorners}

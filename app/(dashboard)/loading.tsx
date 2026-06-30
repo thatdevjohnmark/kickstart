@@ -1,6 +1,6 @@
 export default function DashboardLoading() {
   return (
-    <div className="p-6 lg:p-8 max-w-7xl mx-auto">
+    <div className="p-4 lg:p-8 max-w-7xl mx-auto">
       {/* Header skeleton */}
       <phantom-ui loading animation="pulse" reveal={0.3}>
         <div className="mb-8">

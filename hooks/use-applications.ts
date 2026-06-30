@@ -21,6 +21,9 @@ export function useApplications(initial: Application[]) {
   }
 
   async function moveApplication(id: string, stage: Stage) {
+    // Guard: don't send temp IDs to the server
+    if (id.startsWith("temp_")) return;
+
     const previous = applications;
     optimisticMove(id, stage);
 
@@ -65,9 +68,12 @@ export function useApplications(initial: Application[]) {
     if (result.error) {
       setApplications((prev) => prev.filter((a) => a.id !== tempId));
       setError(result.error);
+    } else if (result.application) {
+      // Replace temp card with real one so subsequent drags/edits use a valid UUID
+      setApplications((prev) =>
+        prev.map((a) => (a.id === tempId ? result.application! : a))
+      );
     }
-    // Note: on success, revalidatePath in the server action will refresh
-    // data on next navigation; the optimistic card stays until then.
     return result;
   }
 
@@ -108,6 +114,9 @@ export function useApplications(initial: Application[]) {
   }
 
   async function removeApplication(id: string) {
+    // Guard: don't send temp IDs to the server
+    if (id.startsWith("temp_")) return;
+
     setError(null);
     const previous = applications;
     setApplications((prev) => prev.filter((a) => a.id !== id));

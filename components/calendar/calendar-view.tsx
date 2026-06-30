@@ -166,7 +166,7 @@ export function CalendarView({ applications }: CalendarViewProps) {
       </div>
 
       {/* Selected date details */}
-      <div className="retro-card bg-surface p-6 w-full lg:w-80 shrink-0">
+      <div className="retro-card bg-surface p-4 lg:p-6 w-full lg:w-80 shrink-0">
         <h3
           className="text-white text-xs mb-4"
           style={{ fontFamily: "'Press Start 2P', cursive" }}

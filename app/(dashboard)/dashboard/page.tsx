@@ -20,7 +20,7 @@ export default async function DashboardPage() {
   const displayName = user?.email?.split("@")[0] ?? "there";
 
   return (
-    <div className="p-6 lg:p-8 max-w-7xl mx-auto">
+    <div className="p-4 lg:p-8 max-w-7xl mx-auto">
       {/* Header */}
       <div className="mb-8">
         <p className="text-white/40 text-xs mb-1">Welcome back,</p>

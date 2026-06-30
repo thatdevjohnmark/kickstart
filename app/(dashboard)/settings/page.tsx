@@ -12,7 +12,7 @@ export default async function SettingsPage() {
   const resumes = await getResumes();
 
   return (
-    <div className="p-6 lg:p-8 max-w-3xl mx-auto">
+    <div className="p-4 lg:p-8 max-w-3xl mx-auto">
       {/* Header */}
       <div className="mb-8">
         <h1

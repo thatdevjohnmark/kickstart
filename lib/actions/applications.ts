@@ -109,20 +109,24 @@ export async function createApplication(formData: FormData) {
     return { error: validated.error.issues[0]?.message ?? "Validation failed" };
   }
 
-  const { error } = await supabase.from("applications").insert({
-    ...validated.data,
-    user_id: user.id,
-    job_url: validated.data.job_url || null,
-    resume_id: validated.data.resume_id ?? null,
-    reminder_date: validated.data.reminder_date || null,
-  });
+  const { data: created, error } = await supabase
+    .from("applications")
+    .insert({
+      ...validated.data,
+      user_id: user.id,
+      job_url: validated.data.job_url || null,
+      resume_id: validated.data.resume_id ?? null,
+      reminder_date: validated.data.reminder_date || null,
+    })
+    .select()
+    .single();
 
   if (error) return { error: error.message };
 
   revalidatePath("/dashboard");
   revalidatePath("/applications");
   revalidatePath("/calendar");
-  return { success: true };
+  return { success: true, application: created as Application };
 }
 
 export async function updateApplication(id: string, formData: FormData) {

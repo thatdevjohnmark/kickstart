@@ -29,4 +29,92 @@
   .retro-card {
     @apply border-4 border-black rounded-lg shadow-[4px_4px_0px_#000] transition-transform hover:-translate-x-1 hover:-translate-y-1;
   }
+
+  .scanner-bed {
+    position: relative;
+  }
+
+  .scanner-bed::before,
+  .scanner-bed::after {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-color: #6c82ff;
+    border-style: solid;
+    border-width: 0;
+    pointer-events: none;
+    opacity: 0.5;
+    transition: opacity 0.3s;
+  }
+
+  .scanner-bed::before {
+    top: 6px;
+    left: 6px;
+    border-top-width: 2px;
+    border-left-width: 2px;
+  }
+
+  .scanner-bed::after {
+    top: 6px;
+    right: 6px;
+    border-top-width: 2px;
+    border-right-width: 2px;
+  }
+
+  .scanner-bed > .corner-bl,
+  .scanner-bed > .corner-br {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-color: #6c82ff;
+    border-style: solid;
+    border-width: 0;
+    pointer-events: none;
+    opacity: 0.5;
+    transition: opacity 0.3s;
+  }
+
+  .scanner-bed > .corner-bl {
+    bottom: 6px;
+    left: 6px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+  }
+
+  .scanner-bed > .corner-br {
+    bottom: 6px;
+    right: 6px;
+    border-bottom-width: 2px;
+    border-right-width: 2px;
+  }
+
+  .scanner-bed:hover::before,
+  .scanner-bed:hover::after,
+  .scanner-bed:hover > .corner-bl,
+  .scanner-bed:hover > .corner-br {
+    opacity: 1;
+  }
+
+  @keyframes scan-sweep {
+    0% { top: -2px; opacity: 1; }
+    10% { top: 10%; }
+    30% { top: 35%; }
+    50% { top: 55%; }
+    70% { top: 75%; }
+    90% { top: 90%; }
+    100% { top: 100%; opacity: 0; }
+  }
+
+  .scan-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #6c82ff, #00ff88, #6c82ff, transparent);
+    box-shadow: 0 0 12px #6c82ff88, 0 0 24px #00ff8844;
+    pointer-events: none;
+    z-index: 10;
+    animation: scan-sweep 3s ease-in-out forwards;
+  }
 }
